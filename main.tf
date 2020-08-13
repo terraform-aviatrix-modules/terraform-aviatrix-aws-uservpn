@@ -19,7 +19,7 @@ resource "aviatrix_spoke_gateway" "single" {
   gw_size            = var.spoke_gw_instance_size
   vpc_id             = aviatrix_vpc.default.vpc_id
   account_name       = var.aws_account_name
-  subnet             = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets)/2].cidr
+  subnet             = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets) / 2].cidr
   transit_gw         = var.transit_gw
 }
 
@@ -33,22 +33,22 @@ resource "aviatrix_spoke_gateway" "ha" {
   gw_size            = var.spoke_gw_instance_size
   vpc_id             = aviatrix_vpc.default.vpc_id
   account_name       = var.aws_account_name
-  subnet             = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets)/2].cidr
-  ha_subnet          = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets)/2+1].cidr
+  subnet             = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets) / 2].cidr
+  ha_subnet          = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets) / 2 + 1].cidr
   ha_gw_size         = var.spoke_gw_instance_size
   transit_gw         = var.transit_gw
 }
 
 #Aviatrix VPN Gateway
 resource "aviatrix_gateway" "vpn" {
-  count = var.vpn_gw_count
+  count            = var.vpn_gw_count
   cloud_type       = 1
   account_name     = var.aws_account_name
-  gw_name          = "${var.spoke_name}-vpn-gw-${count.index+1}"
+  gw_name          = "${var.spoke_name}-vpn-gw-${count.index + 1}"
   vpc_id           = aviatrix_vpc.default.vpc_id
   vpc_reg          = var.region
   gw_size          = var.vpn_gw_instance_size
-  subnet           = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets)/2+(count.index % 2)].cidr #Using modulo to put even instances in subnetlength/2+0 and odd in subnetlength/2+1
+  subnet           = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets) / 2 + (count.index % 2)].cidr #Using modulo to put even instances in subnetlength/2+0 and odd in subnetlength/2+1
   vpn_access       = true
   vpn_cidr         = var.vpn_cidr[count.index]
   split_tunnel     = var.vpn_split_tunnel
@@ -64,6 +64,6 @@ resource "aviatrix_gateway" "vpn" {
 
 # Create an Aviatrix Vpn User Accelerator
 resource "aviatrix_vpn_user_accelerator" "vpc_accelerator" {
-  count              = var.vpn_user_accelerator ? 1 : 0
+  count    = var.vpn_user_accelerator ? 1 : 0
   elb_name = aviatrix_gateway.vpn[0].elb_name
 }
