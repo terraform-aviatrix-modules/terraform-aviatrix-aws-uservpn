@@ -11,32 +11,30 @@ resource "aviatrix_vpc" "default" {
 
 # Single Spoke GW
 resource "aviatrix_spoke_gateway" "single" {
-  count              = var.ha_gw ? 0 : 1
-  enable_active_mesh = true
-  cloud_type         = 1
-  vpc_reg            = var.region
-  gw_name            = "${var.spoke_name}-spoke-gw"
-  gw_size            = var.spoke_gw_instance_size
-  vpc_id             = aviatrix_vpc.default.vpc_id
-  account_name       = var.aws_account_name
-  subnet             = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets) / 2].cidr
-  transit_gw         = var.transit_gw
+  count        = var.ha_gw ? 0 : 1
+  cloud_type   = 1
+  vpc_reg      = var.region
+  gw_name      = "${var.spoke_name}-spoke-gw"
+  gw_size      = var.spoke_gw_instance_size
+  vpc_id       = aviatrix_vpc.default.vpc_id
+  account_name = var.aws_account_name
+  subnet       = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets) / 2].cidr
+  transit_gw   = var.transit_gw
 }
 
 # HA Spoke GW
 resource "aviatrix_spoke_gateway" "ha" {
-  count              = var.ha_gw ? 1 : 0
-  enable_active_mesh = true
-  cloud_type         = 1
-  vpc_reg            = var.region
-  gw_name            = "${var.spoke_name}-spoke-gw"
-  gw_size            = var.spoke_gw_instance_size
-  vpc_id             = aviatrix_vpc.default.vpc_id
-  account_name       = var.aws_account_name
-  subnet             = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets) / 2].cidr
-  ha_subnet          = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets) / 2 + 1].cidr
-  ha_gw_size         = var.spoke_gw_instance_size
-  transit_gw         = var.transit_gw
+  count        = var.ha_gw ? 1 : 0
+  cloud_type   = 1
+  vpc_reg      = var.region
+  gw_name      = "${var.spoke_name}-spoke-gw"
+  gw_size      = var.spoke_gw_instance_size
+  vpc_id       = aviatrix_vpc.default.vpc_id
+  account_name = var.aws_account_name
+  subnet       = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets) / 2].cidr
+  ha_subnet    = aviatrix_vpc.default.subnets[length(aviatrix_vpc.default.subnets) / 2 + 1].cidr
+  ha_gw_size   = var.spoke_gw_instance_size
+  transit_gw   = var.transit_gw
 }
 
 #Aviatrix VPN Gateway
