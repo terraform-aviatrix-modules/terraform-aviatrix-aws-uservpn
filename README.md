@@ -10,7 +10,7 @@ This module deploys a VPC, Aviatrix spoke gateways and one or more Aviatrix User
 ```
 module "vpn_1" {
   source  = "terraform-aviatrix-modules/aws-uservpn/aviatrix"
-  version = "1.0.0"
+  version = "1.0.2"
 
   spoke_name = "vpn1"
   cidr = "10.10.0.0/20"
