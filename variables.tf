@@ -1,5 +1,10 @@
-variable "spoke_name" {
-  description = "Name for the VPN spoke"
+variable "name" {
+  description = "Name for the VPN gateways"
+  type        = string
+}
+
+variable "vpc_id" {
+  description = "VPC ID of the VPC to deploy in."
   type        = string
 }
 
@@ -8,28 +13,17 @@ variable "region" {
   type        = string
 }
 
-variable "cidr" {
-  description = "The IP CIDR to be used to create the VPC"
+variable "subnets" {
+  description = "List of a single or two subnets over which to evenly deploy the VPN gateways"
+  type        = list(string)
+}
+
+variable "account" {
+  description = "The accountname on the Aviatrix controller, under which the controller will deploy this VPC"
   type        = string
 }
 
-variable "aws_account_name" {
-  description = "The AWS accountname on the Aviatrix controller, under which the controller will deploy this VPC"
-  type        = string
-}
-
-variable "transit_gw" {
-  description = "The name of the Aviatrix Transit gateway to attach the spoke"
-  type        = string
-}
-
-variable "spoke_gw_instance_size" {
-  description = "Size of the spoke gateway instances"
-  type        = string
-  default     = "t3.medium"
-}
-
-variable "vpn_gw_instance_size" {
+variable "instance_size" {
   description = "Size of the VPN gateway instances"
   type        = string
   default     = "t3.medium"
