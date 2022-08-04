@@ -64,5 +64,5 @@ This module will return the following outputs:
 
 key | description
 :---|:---
-vpc | The created VPC as an object with all of it's attributes. This was created using the aviatrix_vpc resource.
+elb_dns_name | DNS name of the ELB (if deployed).
 vpn_gateway | A list of the created Aviatrix VPN gateways as an object with all of it's attributes.

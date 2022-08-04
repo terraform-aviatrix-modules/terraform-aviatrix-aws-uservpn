@@ -3,7 +3,7 @@ output "vpn_gateway" {
   value       = aviatrix_gateway.vpn
 }
 
-output "elb_name" {
-  description = "Name of the ELB (if deployed)."
-  value       = aviatrix_gateway.vpn[0].elb_name
+output "elb_dns_name" {
+  description = "DNS name of the ELB (if deployed)."
+  value       = aviatrix_gateway.vpn[0].elb_dns_name
 }
